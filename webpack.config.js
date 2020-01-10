@@ -15,12 +15,6 @@ const config = {
 		path: path.resolve(__dirname, 'dist')
 	},
 
-	resolve: {
-		alias: {
-			'vue$': './node_modules/vue/dist/vue.js'
-		}
-	},
-
 	plugins: [
 		new webpack.DefinePlugin({
 			'process.env': {
