@@ -17,6 +17,14 @@
     <div v-bind:id="dynamicId">Id</div>
     <button v-bind:disabled="isButtonDisabled">按钮</button>
     <div v-bind:[attributeName]="attributeValue">动态参数</div>
+    <div>反转字符串：{{ reverseMessageStr }}</div>
+    <div class="test" v-bind:class="{active:isActive,'text-danger':isError}">绑定html class</div>
+    <div class="test" v-bind:class="classObject">绑定html class 对象</div>
+    <div class="test" v-bind:class="classObjectCom">绑定html class 对象 计算属性</div>
+    <button @click="push()">改变数组数据</button>
+    <ol>
+      <li v-for="todo in todos" v-bind:key="todo.text">{{todo.text}}</li>
+    </ol>
   </div>
 </template>
 <script>
@@ -31,7 +39,10 @@ export default {
       dynamicId: "testid",
       isButtonDisabled: true,
       attributeName: "class",
-      attributeValue: "attribute-class"
+      attributeValue: "attribute-class",
+      isActive: true,
+      isError: false,
+      classObject: { active: true, "text-danger": true }
     };
   },
   methods: {
@@ -40,6 +51,21 @@ export default {
         .split("")
         .reverse()
         .join("");
+    },
+    push() {
+      // this.todos[0] = { text: "历史" };
+      this.$set(this.todos, 0, { text: "历史" })
+    }
+  },
+  computed: {
+    reverseMessageStr: function() {
+      return this.message
+        .split("")
+        .reverse()
+        .join("");
+    },
+    classObjectCom: function() {
+      return { active: true, "text-danger": true };
     }
   },
   created: function() {
@@ -50,5 +76,13 @@ export default {
 <style lang="stylus" scoped>
 .attribute-class {
   color: green;
+}
+
+.active {
+  color: red;
+}
+
+.text-danger {
+  font-weight: bold;
 }
 </style>
